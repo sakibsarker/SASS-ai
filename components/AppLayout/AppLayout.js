@@ -1,9 +1,10 @@
-import React from 'react';
+import React from "react";
 
-export const AppLayout = ({children}) => {
+export const AppLayout = ({ children }) => {
   return (
-    <div>this is app layout 
-        <div>{children}</div>
+    <div className="grid grid-cols-[300px_1fr]">
+      <div>this is app layout</div>
+      <div>{children}</div>
     </div>
-  )
-}
+  );
+};
