@@ -2,35 +2,20 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import HeroImage from "../public/banner.jpg";
+import { Logo } from '../components/logo/index'
 
 export default function Home() {
-  const { user, error, isLoading } = useUser();
 
-  console.log(user);
-
-  console.log("USER:", user);
   return (
-    <div>
-      <h1>Home page</h1>
-      <div>
-        {!!user ? (
-          <>
-            <div>
-              <Image
-                src={user.picture}
-                alt={user.name}
-                height={50}
-                width={50}
-              />
-              <h2>Name: {user.name}</h2>
-              <p>Email: {user.email}</p>
-            </div>
-            <Link href="/api/auth/logout">Logout</Link>
-          </>
-        ) : (
-          <Link href="/api/auth/login">Login</Link>
-        )}
+    <div className="w-screen h-screen overflow-hidden flex justify-center items-center relative">
+      <Image src={HeroImage} alt="Hero" fill className="absolute"/>
+      <div className="relative z-10 text-white px-10 py-5 text-center max-w-screen-sm bg-slate-900/50 rounded backdrop-blur-sm">
+        <Logo/>
+        <p className="text text-justify">Revolutionize marketing with cutting-edge AI-generated content.
+           Elevate your brand, captivate audiences, and stay ahead of the competition. 
+           Transforming posts into powerful marketing assets with innovative artificial intelligence solutions.</p>
+        <Link className="bg-green-500 mt-5 tracking-wider w-full text-center text-white font-bold cursor-pointer uppercase px-4 py-2 rounded-md hover:bg-green-600 transition-colors block" href='/post/new'>Start Now</Link>
       </div>
     </div>
   );

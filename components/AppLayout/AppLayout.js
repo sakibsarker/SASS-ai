@@ -36,7 +36,7 @@ export const AppLayout = ({ children }) => {
             <div className="flex-1">
             <p className="font-bold">{user.email}</p>
             <Link className="text-sm font-medium" href="/api/auth/logout">
-              <p className="pb-1 px-5 w-min rounded-2xl text-black bg-white hover:bg-red-900">Logout</p>
+              <p className="pb-1 px-5 w-min rounded-md text-black bg-white hover:bg-black hover:text-white">Logout</p>
               </Link>
             </div>
             
