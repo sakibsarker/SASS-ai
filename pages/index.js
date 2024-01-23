@@ -15,7 +15,7 @@ export default function Home() {
         <p className="text text-justify">Revolutionize marketing with cutting-edge AI-generated content.
            Elevate your brand, captivate audiences, and stay ahead of the competition. 
            Transforming posts into powerful marketing assets with innovative artificial intelligence solutions.</p>
-        <Link className="bg-green-500 mt-5 tracking-wider w-full text-center text-white font-bold cursor-pointer uppercase px-4 py-2 rounded-md hover:bg-green-600 transition-colors block" href='/post/new'>Start Now</Link>
+        <Link className="btn" href='/post/new'>Start Now</Link>
       </div>
     </div>
   );
