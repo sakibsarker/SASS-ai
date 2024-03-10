@@ -15,7 +15,6 @@ export default function NewPost(props) {
     const json=await response.json();
     console.log("RESULT: ",json)
     setPostContent(json.post.postContent)
-
   };
   return (
     <div>
