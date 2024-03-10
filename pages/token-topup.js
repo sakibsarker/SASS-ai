@@ -2,8 +2,24 @@ import React from 'react'
 import { AppLayout } from '@/components/AppLayout'
 
 export default function TokenTopup() {
+  const handleClick=async()=>{
+    try{
+      await fetch(`/api/addToken`,{
+        method:'POST',
+         
+      })
+
+    }catch (error) {
+      setError(error.message);
+    }
+   
+  }
+
   return (
-    <div>TokenTopup</div>
+    <div>
+      <h1>this is token topup</h1>
+      <button className='btn' onClick={handleClick}>Add token</button>
+    </div>
   )
 }
 
