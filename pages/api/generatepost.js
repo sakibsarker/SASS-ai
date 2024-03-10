@@ -18,7 +18,7 @@ export default async function handler(req, res) {
       {
         role: "user",
         content: `
-        Generate  me a blog post on the following topic delimited by triple hyphens:
+        Generate  me a long and detailed blog post on the following topic delimited by triple hyphens:
         ---
          ${topic}
         ---
@@ -31,6 +31,6 @@ export default async function handler(req, res) {
     ],
     model: "gpt-3.5-turbo",
   });
-  console.log(completion.choices[0].message.content)
-  res.status(200).json({ name: "Generate post" });
+  // console.log(completion.choices[0].message.content)
+  res.status(200).json({postContent:completion.choices[0].message.content});
 }
