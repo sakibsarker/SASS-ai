@@ -7,22 +7,62 @@ export default function NewPost(props) {
 
   const [postContent,setPostContent]=useState("")
   console.log("NEW POST PROPS",props)
+  const [topic,setTopic]=useState("")
+  const [keywords,setKeywords]=useState("")
 
-  const handleClick = async () => {
-    const response=await fetch(`/api/generatepost`,{
-      method:"POST"
-    });
-    const json=await response.json();
-    console.log("RESULT: ",json)
-    setPostContent(json.post.postContent)
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission
+
+    try {
+      const response = await fetch(`/api/generatepost`, {
+        method: "POST",
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({ topic, keywords })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate post. Please try again.');
+      }
+
+      const json = await response.json();
+      console.log(json)
+      setPostContent(json.post.postContent);
+    } catch (error) {
+      setError(error.message);
+    }
   };
+
+
   return (
     <div>
-      <h1>This is new post</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>
+            <strong>
+              Generate a blog post on the topic of:
+            </strong>
+          </label>
+          <textarea className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" value={topic} onChange={e=>setTopic(e.target.value)}/>
 
-      <button className="btn" onClick={handleClick}>
+        </div>
+        <div>
+        <label>
+            <strong>
+              Targeting the following keywords:
+            </strong>
+          </label>
+          <textarea className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" value={keywords} onChange={e=>setKeywords(e.target.value)}/>
+        </div>
+      <button type="submit" className="btn">
         Generate
       </button>
+        
+      </form>
+     
+
+     
       <MarkDown>
         {postContent}
       </MarkDown>

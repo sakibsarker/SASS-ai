@@ -5,8 +5,9 @@ export default async function handler(req, res) {
     apiKey: process.env.OPENAI_API_KEY,
   });
 
-  const topic = "dog owership";
-  const keywords = "first-time dog ower, puppy diet";
+  const {topic,keywords}=req.body;
+
+
 
   const completion = await openai.chat.completions.create({
     messages: [
