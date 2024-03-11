@@ -1,5 +1,5 @@
 import clientPromise from "@/lib/mongodb";
-import { withApiAuthRequired,getSession } from "@auth0/nextjs-auth0";
+import { withApiAuthRequired, getSession } from "@auth0/nextjs-auth0";
 import OpenAI from "openai";
 
 export default withApiAuthRequired(async function handler(req, res) {
@@ -8,24 +8,20 @@ export default withApiAuthRequired(async function handler(req, res) {
   const client = await clientPromise;
   const db = client.db("aiblogpost");
 
-  const userProfile = await db.collection("users").findOne(
-    {
-      auth0Id: user.sub,
-    });
+  const userProfile = await db.collection("users").findOne({
+    auth0Id: user.sub,
+  });
 
-    if(!userProfile?.availableTokens){
-      res.status(403);
-      return;
-
-    }
+  if (!userProfile?.availableTokens) {
+    res.status(403);
+    return;
+  }
 
   const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
   });
 
-  const {topic,keywords}=req.body;
-
-
+  const { topic, keywords } = req.body;
 
   const completion = await openai.chat.completions.create({
     messages: [
@@ -48,13 +44,13 @@ export default withApiAuthRequired(async function handler(req, res) {
         `,
       },
     ],
-    model: "gpt-3.5-turbo",
+    model: "gpt-3.5-turbo-0125",
   });
-  const postContent=completion.choices[0].message.content
+  const postContent = completion.choices[0].message.content;
 
-  const seoResponse=await openai.chat.completions.create({
-    model: "gpt-3.5-turbo",
-    messages:[
+  const seoResponse = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo-0125",
+    messages: [
       {
         role: "system",
         content:
@@ -75,30 +71,39 @@ export default withApiAuthRequired(async function handler(req, res) {
       },
     ],
     response_format: { type: "json_object" },
-  })
-  const {title,metaDescription}=seoResponse.choices[0].message.content
-  console.log(seoResponse.choices[0].message.content)
-  console.log(seoResponse.title)
-  console.log(seoResponse.metaDescription)
-  // console.log(completion.choices[0].message.content)
-  console.log(title)
-  console.log(metaDescription)
-  await db.collection("users").updateOne({
-    auth0Id:user.sub
-  },{
-    $inc: {
-      availableTokens: -1,
-    },
   });
 
-  const post=await db.collection("posts").insertOne({
+  const { title, metaDescription } =
+    seoResponse?.choices[0]?.message?.content || {};
+  console.log(seoResponse.choices[0].message.content);
+  // console.log(completion.choices[0].message.content)
+  // Accessing title and metaDescription from seoResponse
+
+  // Log the extracted title and metaDescription
+  console.log("Title:", title);
+  console.log("Meta Description:", metaDescription);
+
+  await db.collection("users").updateOne(
+    {
+      auth0Id: user.sub,
+    },
+    {
+      $inc: {
+        availableTokens: -1,
+      },
+    }
+  );
+
+  const post = await db.collection("posts").insertOne({
     postContent,
     title,
     metaDescription,
     topic,
     keywords,
-    userId:userProfile._id,
-    created:new Date(),
-  })
-  res.status(200).json({post:{postContent,title,metaDescription}});
+    userId: userProfile._id,
+    created: new Date(),
+  });
+
+  console.log("POST:", post);
+  res.status(200).json({ post: { postContent, title, metaDescription } });
 });

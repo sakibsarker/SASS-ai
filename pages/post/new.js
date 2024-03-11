@@ -4,9 +4,6 @@ import { AppLayout } from "@/components/AppLayout";
 import MarkDown from 'react-markdown' 
 
 export default function NewPost(props) {
-
-  const [postContent,setPostContent]=useState("")
-  console.log("NEW POST PROPS",props)
   const [topic,setTopic]=useState("")
   const [keywords,setKeywords]=useState("")
 
@@ -28,7 +25,7 @@ export default function NewPost(props) {
 
       const json = await response.json();
       console.log(json)
-      setPostContent(json.post.postContent);
+   
     } catch (error) {
       console.log(error.message);
     }
@@ -64,7 +61,7 @@ export default function NewPost(props) {
 
      
       <MarkDown>
-        {postContent}
+        {/* {postContent} */}
       </MarkDown>
     </div>
   );
