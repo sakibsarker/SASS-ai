@@ -77,11 +77,10 @@ NewPost.getLayout = function getLayout(page, pageProps) {
 };
 
 export const getServerSideProps = withPageAuthRequired({
-  async getServerSideProps() {
-    return {
-      props: {
-        test: "this is a test",
-      },
-    };
+  async getServerSideProps(ctx) {
+   const props=await getAppProps(ctx)
+   return{
+    props,
+   }
   },
 });

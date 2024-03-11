@@ -6,8 +6,9 @@ import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Logo } from '../logo'
 
-export const AppLayout = ({ children }) => {
+export const AppLayout = ({ children, availableTokens }) => {
   const { user, error, isLoading } = useUser();
+  console.log("APP PROPS:", availableTokens)
   return (
     <div className="grid grid-cols-[300px_1fr] h-screen max-h-screen">
 
@@ -17,7 +18,7 @@ export const AppLayout = ({ children }) => {
           <Link className="btn" href='/post/new'>New post</Link>
           <Link className="block mt-2 text-center" href='/token-topup'>
             <FontAwesomeIcon icon={faCoins} className="text-yellow-500"/>
-            <span className="pl-1"> 0 tokens available</span>
+            <span className="pl-1"> { availableTokens} tokens available</span>
          </Link>
         </div>
         <div className="flex-1 overflow-auto bg-gradient-to-b from-slate-800 to-blue-500">list of posts</div>
