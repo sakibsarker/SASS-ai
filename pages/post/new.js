@@ -30,7 +30,7 @@ export default function NewPost(props) {
       console.log(json)
       setPostContent(json.post.postContent);
     } catch (error) {
-      setError(error.message);
+      console.log(error.message);
     }
   };
 
