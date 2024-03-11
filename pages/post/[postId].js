@@ -9,7 +9,7 @@ import { faHashtag } from "@fortawesome/free-solid-svg-icons";
 import { getAppProps } from "@/utils/getAppProps";
 
 export default function Post(props) {
-  console.log("props:", props);
+  // console.log("props:", props);
 
   return (
     <div className="overflow-auto flex h-full justify-center">
