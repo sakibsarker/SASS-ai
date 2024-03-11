@@ -20,7 +20,7 @@ export const AppLayout = ({ children }) => {
             <span className="pl-1"> 0 tokens available</span>
          </Link>
         </div>
-        <div className="flex-1 overflow-auto bg-gradient-to-b from-slate-800 to-cyan-800">list of posts</div>
+        <div className="flex-1 overflow-auto bg-gradient-to-b from-slate-800 to-blue-500">list of posts</div>
         <div className=" bg-slate-700 flex items-center gap-2 border-t border-t-black/50 h-20 px-2">
         {!!user ? (
           <>

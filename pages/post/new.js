@@ -2,10 +2,12 @@ import React,{useState} from "react";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { AppLayout } from "@/components/AppLayout";
 import MarkDown from 'react-markdown' 
+import { useRouter } from "next/router";
 
 export default function NewPost(props) {
   const [topic,setTopic]=useState("")
   const [keywords,setKeywords]=useState("")
+  const router=useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
@@ -25,6 +27,9 @@ export default function NewPost(props) {
 
       const json = await response.json();
       console.log(json)
+      if(json?.postId){
+        router.push(`/post/${json.postId}`);
+      }
    
     } catch (error) {
       console.log(error.message);
@@ -60,9 +65,9 @@ export default function NewPost(props) {
      
 
      
-      <MarkDown>
-        {/* {postContent} */}
-      </MarkDown>
+      {/* <MarkDown>
+        {postContent}
+      </MarkDown> */}
     </div>
   );
 }

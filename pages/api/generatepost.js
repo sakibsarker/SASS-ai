@@ -77,11 +77,9 @@ export default withApiAuthRequired(async function handler(req, res) {
     seoResponse?.choices[0]?.message?.content || {};
   console.log(seoResponse.choices[0].message.content);
   // console.log(completion.choices[0].message.content)
-  // Accessing title and metaDescription from seoResponse
-
-  // Log the extracted title and metaDescription
-  console.log("Title:", title);
-  console.log("Meta Description:", metaDescription);
+  
+  console.log(title||"");
+  console.log(metaDescription || "");
 
   await db.collection("users").updateOne(
     {
@@ -105,5 +103,5 @@ export default withApiAuthRequired(async function handler(req, res) {
   });
 
   console.log("POST:", post);
-  res.status(200).json({ post: { postContent, title, metaDescription } });
+  res.status(200).json({ postId: post.insertedId });
 });
