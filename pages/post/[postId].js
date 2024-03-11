@@ -12,7 +12,7 @@ export default function Post(props) {
   // console.log("props:", props);
 
   return (
-    <div className="overflow-auto flex h-full justify-center">
+    <div className="overflow-auto h-full">
       <div className="max-w-screen-sm max-auto">
         <div className="text-sm font-bold mt-6 p-2 bg-stone-200 rounded-sm">
           SEO title and meta description

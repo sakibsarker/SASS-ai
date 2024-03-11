@@ -6,7 +6,7 @@ import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Logo } from '../logo'
 
-export const AppLayout = ({ children, availableTokens,posts }) => {
+export const AppLayout = ({ children, availableTokens,posts,postId }) => {
   const { user, error, isLoading } = useUser();
   console.log("APP PROPS:", availableTokens)
   console.log("POST:", posts)
@@ -24,7 +24,7 @@ export const AppLayout = ({ children, availableTokens,posts }) => {
         </div>
         <div className="flex-1 overflow-auto bg-gradient-to-b from-slate-800 to-blue-500">
           {posts.map(post=>(
-           <Link key={post._id} href={`/post/${post._id}`} className="block text-ellipsis overflow-hidden whitespace-nowrap my-1 px-2 bg-white/10 cursor-pointer rounded-sm">
+           <Link key={post._id} href={`/post/${post._id}`} className={`border border-white/0 block text-ellipsis overflow-hidden whitespace-nowrap my-1 px-2 bg-white/10 cursor-pointer rounded-sm ${postId==post._id?"bg-white/20 border border-white":""}`}>
           {post.topic}
       
            </Link>

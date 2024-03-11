@@ -18,7 +18,7 @@ export const getAppProps=async(ctx)=>{
 
     const posts=await db.collection("posts").find({
         userId:user._id
-    }).toArray();
+    }).sort({ created:-1}).toArray();
 
     return{
         availableTokens:user.availableTokens,
@@ -26,6 +26,7 @@ export const getAppProps=async(ctx)=>{
             _id:_id.toString(),
             created:created.toString(),
             ...rest
-        }))
+        })),
+        postId:ctx.params?.postId || null
     }
 }
