@@ -6,13 +6,14 @@ import { getAppProps } from '@/utils/getAppProps';
 export default function TokenTopup() {
   const handleClick=async()=>{
     try{
-      await fetch(`/api/addToken`,{
+      const result=await fetch(`/api/addToken`,{
         method:'POST',
          
       })
-
+      const json=await result.json();
+      console.log("RESULT",json)
     }catch (error) {
-      setError(error.message);
+      console.log(error.message);
     }
    
   }
