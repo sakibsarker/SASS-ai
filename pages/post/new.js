@@ -3,6 +3,7 @@ import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { AppLayout } from "@/components/AppLayout";
 import MarkDown from 'react-markdown' 
 import { useRouter } from "next/router";
+import { getAppProps } from "@/utils/getAppProps";
 
 export default function NewPost(props) {
   const [topic,setTopic]=useState("")
