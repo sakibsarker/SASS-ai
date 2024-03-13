@@ -6,7 +6,7 @@ import clientPromise from "@/lib/mongodb";
 const client = await clientPromise;
 
 const cors = Cors({
-  allowMethods: ['POST', 'HEAD'],
+  allowMethods: ['POST','HEAD'],
 });
 
 export const config = {
@@ -17,6 +17,7 @@ export const config = {
 
 const stripe = stripeInit(process.env.STRIPE_SECRET_KEY);
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+const sig = req.headers["stripe-signature"];
 
 const handler = async (req, res) => {
   if (req.method === 'POST') {
@@ -31,16 +32,15 @@ const handler = async (req, res) => {
       console.log("ERROR", e);
     }
     switch (event.type) {
-      case 'payment_intent.succeeded': {
-        
-        const db = client.db("aiblogpost");
+      case "payment_intent.succeeded": {
+        const db = client.db('aiblogpost');
 
-        const paymentIntent=event.data.object;
-        const auth0Id=paymentIntent.metadata.sub;
+        const paymentIntent = event.data.object;
+        const auth0Id = paymentIntent.metadata.sub;
 
-        console.log('AUTH 0 ID: ', paymentIntent);
+        console.log("AUTH 0 ID: ", paymentIntent);
 
-        const userProfile = await db.collection("users").updateOne(
+        const userProfile = await db.collection('users').updateOne(
           {
             auth0Id,
           },
@@ -56,14 +56,14 @@ const handler = async (req, res) => {
             upsert: true,
           }
         );
+
         break;
       }
       default:
-        console.log(`Unhandled event type ${event.type}`)
+        console.log("Unhandled event type:",event.type);
     }
-    res.status(200).json({received:true})
+    res.status(200).json({ received: true });
   }
 };
 
-
-export default cors(handler)
+export default handler;
