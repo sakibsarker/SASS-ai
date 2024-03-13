@@ -8,8 +8,8 @@ import { Logo } from '../logo'
 
 export const AppLayout = ({ children, availableTokens,posts,postId }) => {
   const { user, error, isLoading } = useUser();
-  console.log("APP PROPS:", availableTokens)
-  console.log("POST:", posts)
+  // console.log("APP PROPS:", availableTokens)
+  // console.log("POST:", posts)
   return (
     <div className="grid grid-cols-[300px_1fr] h-screen max-h-screen">
 
