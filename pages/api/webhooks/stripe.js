@@ -32,7 +32,8 @@ const handler = async (req, res) => {
       console.log("ERROR", e);
     }
     switch (event.type) {
-      case "payment_intent.succeeded": {
+      case 'payment_intent.succeeded':
+         {
         const db = client.db('aiblogpost');
 
         const paymentIntent = event.data.object;
