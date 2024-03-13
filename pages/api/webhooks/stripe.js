@@ -3,8 +3,10 @@ import stripeInit from "stripe";
 import verifyStripe from "@webdeveducation/next-verify-stripe";
 import clientPromise from "@/lib/mongodb";
 
+const client = await clientPromise;
+
 const cors = Cors({
-  allowMethods: ["POST", "HEAD"],
+  allowMethods: ['POST', 'HEAD'],
 });
 
 export const config = {
@@ -30,11 +32,13 @@ const handler = async (req, res) => {
     }
     switch (event.type) {
       case 'payment_intent.succeeded': {
-        const client = await clientPromise;
+        
         const db = client.db("aiblogpost");
 
         const paymentIntent=event.data.object;
         const auth0Id=paymentIntent.metadata.sub;
+
+        console.log('AUTH 0 ID: ', paymentIntent);
 
         const userProfile = await db.collection("users").updateOne(
           {
@@ -52,6 +56,7 @@ const handler = async (req, res) => {
             upsert: true,
           }
         );
+        break;
       }
       default:
         console.log(`Unhandled event type ${event.type}`)
